@@ -16,11 +16,11 @@ footerEl.addEventListener("click", function () {
 
 // Ex 2 - Tu vas faire que si quelqu'un clique sur ce bouton (hamburger), l'élément HTML portant l'Id "navbarHeader" perde sa classe collapse. 
 // Une fois que ça, ça marche, fait que si on clique à nouveau dessus, la classe collapse soit rajoutée à nouveau à l'élément portant l'Id navbarHeader.
-let navbar_header = document.getElementById('navbarHeader');
+let navbarHeader = document.getElementById('navbarHeader');
 let hamburger = document.getElementsByClassName('navbar-toggler')[0];
 
 hamburger.addEventListener("click", function(){
-  navbar_header.classList.toggle("collapse");
+  navbarHeader.classList.toggle("collapse");
 });
 
 // Ex 3 - Si on clique sur le bouton "Edit" de la première card, le texte de la card va se mettre en rouge de façon irréversible (sauf si on recharge la page).
@@ -59,13 +59,13 @@ navbar.addEventListener('dblclick', function () {
 // Cela veut dire que le texte disparaît, l'image n'apparaîtra qu'à 20 % de sa taille d'origine et les boutons "Edit" / "View" restent visibles. 
 // Cette fonction sera réversible : s'il repasse sa souris, la card redevient normale
 
-let view_button = document.getElementsByClassName("btn btn-sm btn-success");
+let viewBtn = document.getElementsByClassName("btn btn-sm btn-success");
 let card = document.querySelectorAll("div.card-body");
 let text = document.querySelectorAll("div.card-body > p");
 let image = document.getElementsByClassName("card-img-top");
 
 for (let x = 0; x < card.length; x++) {
-view_button[x].addEventListener('mouseover', function(){
+viewBtn[x].addEventListener('mouseover', function(){
   if (text[x].style.display === "") {
     text[x].style.display = "none";
     image[x].style.width = "20%";
@@ -74,3 +74,24 @@ view_button[x].addEventListener('mouseover', function(){
     image[x].style.width ="";
   }
 })};
+
+// Ex 7 - Si un utilisateur clique sur le bouton gris ==>, la dernière card (en bas à droite) va passer en premier (en haut à gauche). 
+// On va pouvoir faire tourner les cards !
+let nextBtn = document.querySelectorAll(".btn-secondary")[0];
+
+nextBtn.addEventListener("click", function(){
+    const cardsNode = document.querySelectorAll('.card');
+    const lastCard = cardsNode[cardsNode.length - 1].parentNode;
+    lastCard.parentNode.insertBefore(lastCard, lastCard.parentNode.firstChild);
+  })
+
+  // Ex 8 - Si un utilisateur clique sur le bouton bleu <==, la première card devra passer en dernier.
+let previousBtn = document.querySelectorAll(".btn-primary")[0];
+
+previousBtn.addEventListener("click", function(e){
+  e.preventDefault();
+  const cardsNode = document.querySelectorAll('.card');
+  const firstCard = cardsNode[0].parentNode;
+  const lastCard = cardsNode[cardsNode.length - 1].parentNode;
+  firstCard.parentNode.insertBefore(firstCard, lastCard.nextSibling);
+})
