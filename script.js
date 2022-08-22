@@ -16,37 +16,61 @@ footerEl.addEventListener("click", function () {
 
 // Ex 2 - Tu vas faire que si quelqu'un clique sur ce bouton (hamburger), l'élément HTML portant l'Id "navbarHeader" perde sa classe collapse. 
 // Une fois que ça, ça marche, fait que si on clique à nouveau dessus, la classe collapse soit rajoutée à nouveau à l'élément portant l'Id navbarHeader.
-let navbarEl = document.getElementById('navbarHeader');
+let navbar_header = document.getElementById('navbarHeader');
 let hamburger = document.getElementsByClassName('navbar-toggler')[0];
 
-function collapse_apparition() {
-  navbarEl.classList.toggle("collapse");
-};
-
-hamburger.addEventListener("click", collapse_apparition);
+hamburger.addEventListener("click", function(){
+  navbar_header.classList.toggle("collapse");
+});
 
 // Ex 3 - Si on clique sur le bouton "Edit" de la première card, le texte de la card va se mettre en rouge de façon irréversible (sauf si on recharge la page).
 let firstCard = document.getElementsByClassName("col-md-4")[0];
 let firstEdit = document.getElementsByClassName("btn btn-sm btn-outline-secondary")[0];
 
-function change_color1() {
+firstEdit.addEventListener("click", function () {
   firstCard.style.color = 'red'
-};
-firstEdit.addEventListener("click", change_color1);
+});
 
 // Ex 4 - Si on clique sur le bouton "Edit" de la deuxième card, le texte de la card va se mettre en vert. Si on re-clique dessus, il redevient comme avant !
 let secondCard = document.getElementsByClassName("col-md-4")[1];
 let secondEdit = document.getElementsByClassName("btn btn-sm btn-outline-secondary")[1];
 
-function change_color2() {
+secondEdit.addEventListener("click", function () {
   if (secondCard.style.color === 'green'){
     secondCard.style.color = '' ;}
     else {
       secondCard.style.color = 'green' ;}
-};
-secondEdit.addEventListener("click", change_color2);
+});
 
 // Ex 5 - Si un utilisateur double clique sur la navbar en haut, tout Bootstrap disparaît et la page s'affiche comme si on avait oublié de mettre le CDN qui la relie au fichier CSS. 
 // Si possible, rends cette fonctionnalité réversible (un nouveau double-clic fait tout revenir à la normale).
-let bootstrap = document.querySelectorAll("head > link")[0].href;
-console.log(bootstrap)
+let bootstrap = document.querySelectorAll("head > link")[0];
+let navbar = document.getElementsByClassName("navbar navbar-dark bg-dark box-shadow")[0];
+
+navbar.addEventListener('dblclick', function () {
+  if (bootstrap.disabled === false) {
+    bootstrap.disabled = true;
+  } else {
+    bootstrap.disabled = false;
+  }
+});
+
+// Ex 6 - Si un utilisateur passe sa souris sur le bouton "View" d'une card (n'importe laquelle), celle-ci va se réduire. 
+// Cela veut dire que le texte disparaît, l'image n'apparaîtra qu'à 20 % de sa taille d'origine et les boutons "Edit" / "View" restent visibles. 
+// Cette fonction sera réversible : s'il repasse sa souris, la card redevient normale
+
+let view_button = document.getElementsByClassName("btn btn-sm btn-success");
+let card = document.querySelectorAll("div.card-body");
+let text = document.querySelectorAll("div.card-body > p");
+let image = document.getElementsByClassName("card-img-top");
+
+for (let x = 0; x < card.length; x++) {
+view_button[x].addEventListener('mouseover', function(){
+  if (text[x].style.display === "") {
+    text[x].style.display = "none";
+    image[x].style.width = "20%";
+  } else {
+    text[x].style.display = "";
+    image[x].style.width ="";
+  }
+})};
